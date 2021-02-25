@@ -92,12 +92,15 @@ class Restaurants extends Component {
       return genrefiltered.indexOf(r) !== -1 && statefiltered.indexOf(r) !== -1;
     });
 
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    const sorted =
+      sortColumn.order === "asc"
+        ? _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
+        : filtered;
     const restaurantsArray = paginate(sorted, currPage, pageSize);
 
     return (
       <React.Fragment>
-        <p>The total number of restaurants is {restaurantsList.length}</p>
+        <p></p>
         <div className="row">
           <div className="col">
             <SearchField onSearchClick={this.handleSearchClick} />

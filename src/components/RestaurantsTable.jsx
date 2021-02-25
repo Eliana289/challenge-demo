@@ -6,7 +6,7 @@ class RestaurantsTable extends Component {
     { path: "name", label: "Name" },
     { path: "city", label: "City" },
     { path: "state", label: "State" },
-    { key: "nopath" },
+    { key: "Number" },
     { path: "genre", label: "Genres" },
   ];
   preSort = (path) => {

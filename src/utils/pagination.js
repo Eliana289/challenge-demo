@@ -5,7 +5,7 @@ export function paginate(items, pageNumber, pageSize) {
   //   "inside pagination: {pageNum: " + pageNumber + ", pageSize" + pageSize + "}"
   // );
   const startIndex = (pageNumber - 1) * pageSize;
-  if (items.length >= pageSize) {
+  if (items.length >= pageSize && startIndex < items.length) {
     return _(items).slice(startIndex).take(pageSize).value();
   }
   return _(items).slice(0).take(pageSize).value();
