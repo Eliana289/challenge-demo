@@ -7,6 +7,8 @@ import { getGenres } from "./services/getGenres";
 import Selector from "./common/Selector";
 import { getGenrefiltered } from "../utils/getGenrefiltered";
 import RestaurantsTable from "./RestaurantsTable";
+import SearchField from "./common/SearchField";
+import { getSearchfiltered } from "../utils/getSearchfiltered";
 
 class Restaurants extends Component {
   constructor(props) {
@@ -20,6 +22,7 @@ class Restaurants extends Component {
       genres: [],
       selectedGenre: "",
       selectedState: "",
+      searchedList: [],
       sortColumn: { path: "name", order: "asc" },
     };
   }
@@ -52,6 +55,13 @@ class Restaurants extends Component {
     this.setState({ sortColumn: column });
   };
 
+  handleSearchClick = (value) => {
+    console.log(value);
+    this.setState({
+      searchedList: getSearchfiltered(this.state.restaurantsList, value),
+    });
+  };
+
   // {id, name, address1, city, state, zip, lat, long, telephone, tags, website, genre, hours, attire}
   // name, city, state, phone number, and genres
   render() {
@@ -62,6 +72,7 @@ class Restaurants extends Component {
       sortColumn,
       selectedGenre,
       selectedState,
+      searchedList,
     } = this.state;
     const count = restaurantsList.length;
     const states = getStates(restaurantsList);
@@ -78,8 +89,12 @@ class Restaurants extends Component {
       ? getGenrefiltered(restaurantsList, selectedGenre)
       : restaurantsList;
 
-    const filtered = statefiltered.filter((r) => {
-      return genrefiltered.indexOf(r) !== -1;
+    const searchfiltered =
+      searchedList.length !== 0 ? searchedList : restaurantsList;
+    console.log(searchfiltered);
+
+    const filtered = searchfiltered.filter((r) => {
+      return genrefiltered.indexOf(r) !== -1 && statefiltered.indexOf(r) !== -1;
     });
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
@@ -90,20 +105,7 @@ class Restaurants extends Component {
         <p>The total number of restaurants is {restaurantsList.length}</p>
         <div className="row">
           <div className="col">
-            <form class="form-inline">
-              <input
-                class="form-control "
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                class="btn btn-outline-success my-2 my-sm-0"
-                type="submit"
-              >
-                Search
-              </button>
-            </form>
+            <SearchField onSearchClick={this.handleSearchClick} />
           </div>
           <div className="col-2">
             <div class="input-group mb-3">

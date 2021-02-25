@@ -14,30 +14,47 @@ class RestaurantsTable extends Component {
   };
   render() {
     const { restaurantsInTable } = this.props;
-    return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th onClick={() => this.preSort("name")}>Name</th>
-            <th onClick={() => this.preSort("city")}>City</th>
-            <th onClick={() => this.preSort("state")}>State</th>
-            <th>Phone Number</th>
-            <th onClick={() => this.preSort("genres")}>Genres</th>
-          </tr>
-        </thead>
-        <tbody>
-          {restaurantsInTable.map((restaurants) => (
+    if (restaurantsInTable === null || restaurantsInTable.length === 0) {
+      return (
+        <table className="table">
+          <thead>
             <tr>
-              <td>{restaurants.name}</td>
-              <td>{restaurants.city}</td>
-              <td>{restaurants.state}</td>
-              <td>{restaurants.telephone}</td>
-              <td>{restaurants.genre}</td>
+              <th onClick={() => this.preSort("name")}>Name</th>
+              <th onClick={() => this.preSort("city")}>City</th>
+              <th onClick={() => this.preSort("state")}>State</th>
+              <th>Phone Number</th>
+              <th onClick={() => this.preSort("genres")}>Genres</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    );
+          </thead>
+          <p class="align-items-center">Oops, No Record Found</p>
+        </table>
+      );
+    } else {
+      return (
+        <table className="table">
+          <thead>
+            <tr>
+              <th onClick={() => this.preSort("name")}>Name</th>
+              <th onClick={() => this.preSort("city")}>City</th>
+              <th onClick={() => this.preSort("state")}>State</th>
+              <th>Phone Number</th>
+              <th onClick={() => this.preSort("genres")}>Genres</th>
+            </tr>
+          </thead>
+          <tbody>
+            {restaurantsInTable.map((restaurants) => (
+              <tr>
+                <td>{restaurants.name}</td>
+                <td>{restaurants.city}</td>
+                <td>{restaurants.state}</td>
+                <td>{restaurants.telephone}</td>
+                <td>{restaurants.genre}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      );
+    }
   }
 }
 
