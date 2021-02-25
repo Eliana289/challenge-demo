@@ -11,6 +11,6 @@ export function getGenres(item) {
       allGenres.push(tempArray[i]);
     }
   }
-  console.log([...new Set(allGenres)]);
+  // console.log([...new Set(allGenres)]);
   return [...new Set(allGenres)];
 }

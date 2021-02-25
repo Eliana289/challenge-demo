@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 const Selector = (props) => {
-  const { data, items, onItemSelect } = props;
+  const { items, onItemSelect } = props;
   return (
     <select
       onChange={(e) => onItemSelect(e.target.value)}
@@ -9,7 +9,7 @@ const Selector = (props) => {
       id="inputGroupSelect01"
     >
       <option value="" selected>
-        Choose...
+        All
       </option>
       {items.map((item) => (
         <option value={item} key={item}>

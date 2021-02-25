@@ -3,6 +3,6 @@ export function getStates(item) {
     return [];
   }
   const unique = [...new Set(item.map((a) => a.state))];
-  console.log(unique);
+  // console.log(unique);
   return unique;
 }

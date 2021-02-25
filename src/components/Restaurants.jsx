@@ -3,7 +3,8 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/pagination";
 import { getStates } from "./services/getStates";
 import { getGenres } from "./services/getGenres";
-import Selector from "./Selector";
+import Selector from "./common/Selector";
+import { getGenrefiltered } from "../utils/getGenrefiltered";
 
 class Restaurants extends Component {
   constructor(props) {
@@ -55,9 +56,18 @@ class Restaurants extends Component {
     //   return a.name - b.name;
     // });
     // console.log(restaurantsListSorted);
-    const filtered = selectedState
+    const statefiltered = selectedState
       ? restaurantsList.filter((r) => r.state === selectedState)
       : restaurantsList;
+
+    const genrefiltered = selectedGenre
+      ? getGenrefiltered(restaurantsList, selectedGenre)
+      : restaurantsList;
+
+    const filtered = statefiltered.filter((r) => {
+      return genrefiltered.indexOf(r) !== -1;
+    });
+
     const restaurantsArray = paginate(filtered, currPage, pageSize);
 
     return (
@@ -87,11 +97,7 @@ class Restaurants extends Component {
                   States
                 </label>
               </div>
-              <Selector
-                data={restaurantsList}
-                items={states}
-                onItemSelect={this.handleStatesSelect}
-              />
+              <Selector items={states} onItemSelect={this.handleStatesSelect} />
             </div>
           </div>
           <div className="col-2">
@@ -101,11 +107,7 @@ class Restaurants extends Component {
                   Genres
                 </label>
               </div>
-              <Selector
-                data={restaurantsList}
-                items={genres}
-                onItemSelect={this.handleGenresSelect}
-              />
+              <Selector items={genres} onItemSelect={this.handleGenresSelect} />
             </div>
           </div>
         </div>
