@@ -15,6 +15,8 @@ class Restaurants extends Component {
       pageSize: 10,
       states: [],
       genres: [],
+      selectedGenre: "",
+      selectedState: "",
     };
   }
 
@@ -31,11 +33,21 @@ class Restaurants extends Component {
     console.log(page);
     this.setState({ currPage: page });
   };
+
+  handleGenresSelect = (genre) => {
+    console.log(genre);
+    this.setState({ selectedGenre: genre });
+  };
+
+  handleStatesSelect = (stateShort) => {
+    console.log(stateShort);
+    this.setState({ selectedState: stateShort });
+  };
   // {id, name, address1, city, state, zip, lat, long, telephone, tags, website, genre, hours, attire}
   // name, city, state, phone number, and genres
   render() {
     const { restaurantsList } = this.state;
-    const { pageSize, currPage } = this.state;
+    const { pageSize, currPage, selectedGenre, selectedState } = this.state;
     const count = restaurantsList.length;
     const states = getStates(restaurantsList);
     const genres = getGenres(restaurantsList);
@@ -43,7 +55,10 @@ class Restaurants extends Component {
     //   return a.name - b.name;
     // });
     // console.log(restaurantsListSorted);
-    const restaurantsArray = paginate(restaurantsList, currPage, pageSize);
+    const filtered = selectedState
+      ? restaurantsList.filter((r) => r.state === selectedState)
+      : restaurantsList;
+    const restaurantsArray = paginate(filtered, currPage, pageSize);
 
     return (
       <React.Fragment>
@@ -72,7 +87,11 @@ class Restaurants extends Component {
                   States
                 </label>
               </div>
-              <Selector items={states} />
+              <Selector
+                data={restaurantsList}
+                items={states}
+                onItemSelect={this.handleStatesSelect}
+              />
             </div>
           </div>
           <div className="col-2">
@@ -82,7 +101,11 @@ class Restaurants extends Component {
                   Genres
                 </label>
               </div>
-              <Selector items={genres} />
+              <Selector
+                data={restaurantsList}
+                items={genres}
+                onItemSelect={this.handleGenresSelect}
+              />
             </div>
           </div>
         </div>
@@ -109,7 +132,7 @@ class Restaurants extends Component {
           </tbody>
         </table>
         <Pagination
-          itemsCount={count}
+          itemsCount={filtered.length}
           pageSize={pageSize}
           currPage={currPage}
           onPageChange={this.handlePageChange}

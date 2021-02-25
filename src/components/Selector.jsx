@@ -1,12 +1,20 @@
 import React, { Component } from "react";
 
 const Selector = (props) => {
-  const { items } = props;
+  const { data, items, onItemSelect } = props;
   return (
-    <select class="custom-select" id="inputGroupSelect01">
-      <option selected>Choose...</option>
+    <select
+      onChange={(e) => onItemSelect(e.target.value)}
+      class="custom-select"
+      id="inputGroupSelect01"
+    >
+      <option value="" selected>
+        Choose...
+      </option>
       {items.map((item) => (
-        <option key={item}>{item}</option>
+        <option value={item} key={item}>
+          {item}
+        </option>
       ))}
     </select>
   );
