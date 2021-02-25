@@ -1,4 +1,7 @@
 export function getGenres(item) {
+  if (item === null || item === undefined || item.length === 0) {
+    return [];
+  }
   const unique = [...new Set(item.map((a) => a.genre))];
   //   console.log(unique);
   const allGenres = [];
