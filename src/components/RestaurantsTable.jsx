@@ -16,34 +16,52 @@ class RestaurantsTable extends Component {
     const { restaurantsInTable } = this.props;
     if (restaurantsInTable === null || restaurantsInTable.length === 0) {
       return (
-        <table className="table">
-          <thead>
-            <tr>
-              <th onClick={() => this.preSort("name")}>Name</th>
-              <th onClick={() => this.preSort("city")}>City</th>
-              <th onClick={() => this.preSort("state")}>State</th>
-              <th>Phone Number</th>
-              <th onClick={() => this.preSort("genres")}>Genres</th>
-            </tr>
-          </thead>
-          <p class="align-items-center">Oops, No Record Found</p>
-        </table>
+        <div>
+          <table className="table">
+            <thead>
+              <tr key="1">
+                <th key="name" onClick={() => this.preSort("name")}>
+                  Name
+                </th>
+                <th key="city" onClick={() => this.preSort("city")}>
+                  City
+                </th>
+                <th key="state" onClick={() => this.preSort("state")}>
+                  State
+                </th>
+                <th key="number">Phone Number</th>
+                <th key="genres" onClick={() => this.preSort("genres")}>
+                  Genres
+                </th>
+              </tr>
+            </thead>
+          </table>
+          <p className="align-items-center">Oops, No Record Found</p>
+        </div>
       );
     } else {
       return (
         <table className="table">
           <thead>
-            <tr>
-              <th onClick={() => this.preSort("name")}>Name</th>
-              <th onClick={() => this.preSort("city")}>City</th>
-              <th onClick={() => this.preSort("state")}>State</th>
-              <th>Phone Number</th>
-              <th onClick={() => this.preSort("genres")}>Genres</th>
+            <tr key="2">
+              <th key="name" onClick={() => this.preSort("name")}>
+                Name
+              </th>
+              <th key="city" onClick={() => this.preSort("city")}>
+                City
+              </th>
+              <th key="state" onClick={() => this.preSort("state")}>
+                State
+              </th>
+              <th key="number">Phone Number</th>
+              <th key="genres" onClick={() => this.preSort("genres")}>
+                Genres
+              </th>
             </tr>
           </thead>
           <tbody>
             {restaurantsInTable.map((restaurants) => (
-              <tr>
+              <tr key={restaurants.id}>
                 <td>{restaurants.name}</td>
                 <td>{restaurants.city}</td>
                 <td>{restaurants.state}</td>

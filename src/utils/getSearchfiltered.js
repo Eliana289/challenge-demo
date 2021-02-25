@@ -12,7 +12,7 @@ export function getSearchfiltered(items, searchedText) {
     let temp = items[i];
     if (
       temp.name.toLowerCase().includes(searchedText) ||
-      temp.city.toLowerCase() === searchedText ||
+      temp.city.toLowerCase().includes(searchedText) ||
       temp.genre.toLowerCase().includes(searchedText)
     ) {
       res.push(temp);

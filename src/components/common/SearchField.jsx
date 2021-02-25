@@ -23,20 +23,20 @@ class SearchField extends Component {
 
   render() {
     return (
-      <form onKeyPress={(e) => this.handleOnEnter(e)} class="form-inline">
+      <form onKeyPress={(e) => this.handleOnEnter(e)} className="form-inline">
         <input
-          class="form-control"
+          className="form-control"
           type="text"
           value={this.state.value}
           placeholder="Name, State or Genre"
           onChange={(e) => this.handleTextChange(e.target.value)}
         />
         <button
-          class="btn btn-primary"
+          className="btn btn-primary"
           type="button"
           onClick={() => this.props.onSearchClick(this.state.value)}
         >
-          <i class="fa fa-search"></i>
+          <i className="fa fa-search"></i>
         </button>
       </form>
     );

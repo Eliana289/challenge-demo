@@ -74,13 +74,9 @@ class Restaurants extends Component {
       selectedState,
       searchedList,
     } = this.state;
-    const count = restaurantsList.length;
     const states = getStates(restaurantsList);
     const genres = getGenres(restaurantsList);
-    // const restaurantsListSorted = restaurantsList.sort(function (a, b) {
-    //   return a.name - b.name;
-    // });
-    // console.log(restaurantsListSorted);
+
     const statefiltered = selectedState
       ? restaurantsList.filter((r) => r.state === selectedState)
       : restaurantsList;
@@ -91,7 +87,6 @@ class Restaurants extends Component {
 
     const searchfiltered =
       searchedList.length !== 0 ? searchedList : restaurantsList;
-    console.log(searchfiltered);
 
     const filtered = searchfiltered.filter((r) => {
       return genrefiltered.indexOf(r) !== -1 && statefiltered.indexOf(r) !== -1;
@@ -108,9 +103,9 @@ class Restaurants extends Component {
             <SearchField onSearchClick={this.handleSearchClick} />
           </div>
           <div className="col-2">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <label className="input-group-text inputGroupSelect01">
                   States
                 </label>
               </div>
@@ -118,9 +113,9 @@ class Restaurants extends Component {
             </div>
           </div>
           <div className="col-2">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <label className="input-group-text inputGroupSelect01">
                   Genres
                 </label>
               </div>
