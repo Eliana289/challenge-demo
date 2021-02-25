@@ -3,6 +3,7 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/pagination";
 import { getStates } from "./services/getStates";
 import { getGenres } from "./services/getGenres";
+import Selector from "./Selector";
 
 class Restaurants extends Component {
   constructor(props) {
@@ -38,6 +39,10 @@ class Restaurants extends Component {
     const count = restaurantsList.length;
     const states = getStates(restaurantsList);
     const genres = getGenres(restaurantsList);
+    // const restaurantsListSorted = restaurantsList.sort(function (a, b) {
+    //   return a.name - b.name;
+    // });
+    // console.log(restaurantsListSorted);
     const restaurantsArray = paginate(restaurantsList, currPage, pageSize);
 
     return (
@@ -67,12 +72,7 @@ class Restaurants extends Component {
                   States
                 </label>
               </div>
-              <select class="custom-select" id="inputGroupSelect01">
-                <option selected>Choose...</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+              <Selector items={states} />
             </div>
           </div>
           <div className="col-2">
@@ -82,12 +82,7 @@ class Restaurants extends Component {
                   Genres
                 </label>
               </div>
-              <select class="custom-select" id="inputGroupSelect01">
-                <option selected>Choose...</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+              <Selector items={genres} />
             </div>
           </div>
         </div>
