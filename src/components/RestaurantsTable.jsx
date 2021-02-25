@@ -31,6 +31,7 @@ class RestaurantsTable extends Component {
             sortColumn={sortColumn}
             onSort={onSort}
           ></TableHeader>
+          {/* <TableBody data={restaurantsInTable} columns={this.columns} /> */}
           <tbody>
             {restaurantsInTable.map((restaurants) => (
               <tr key={restaurants.id}>
