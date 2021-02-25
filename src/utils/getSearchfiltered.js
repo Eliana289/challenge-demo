@@ -18,5 +18,5 @@ export function getSearchfiltered(items, searchedText) {
       res.push(temp);
     }
   }
-  return res;
+  return res.length === 0 ? [-1] : res;
 }

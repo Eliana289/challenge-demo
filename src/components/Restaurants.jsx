@@ -86,7 +86,7 @@ class Restaurants extends Component {
       : restaurantsList;
 
     const searchfiltered =
-      searchedList.length !== 0 ? searchedList : restaurantsList;
+      searchedList.length === 0 ? restaurantsList : searchedList;
 
     const filtered = searchfiltered.filter((r) => {
       return genrefiltered.indexOf(r) !== -1 && statefiltered.indexOf(r) !== -1;

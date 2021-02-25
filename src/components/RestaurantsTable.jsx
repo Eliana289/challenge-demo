@@ -1,6 +1,14 @@
 import React, { Component } from "react";
+import TableHeader from "./common/TableHeader";
 
 class RestaurantsTable extends Component {
+  columns = [
+    { path: "name", label: "Name" },
+    { path: "city", label: "City" },
+    { path: "state", label: "State" },
+    { key: "nopath" },
+    { path: "genre", label: "Genres" },
+  ];
   preSort = (path) => {
     console.log(path);
     const tempColumn = { ...this.props.sortColumn };
@@ -12,53 +20,17 @@ class RestaurantsTable extends Component {
     }
     this.props.onSort(tempColumn);
   };
+
   render() {
-    const { restaurantsInTable } = this.props;
-    if (restaurantsInTable === null || restaurantsInTable.length === 0) {
-      return (
-        <div>
-          <table className="table">
-            <thead>
-              <tr key="1">
-                <th key="name" onClick={() => this.preSort("name")}>
-                  Name
-                </th>
-                <th key="city" onClick={() => this.preSort("city")}>
-                  City
-                </th>
-                <th key="state" onClick={() => this.preSort("state")}>
-                  State
-                </th>
-                <th key="number">Phone Number</th>
-                <th key="genres" onClick={() => this.preSort("genres")}>
-                  Genres
-                </th>
-              </tr>
-            </thead>
-          </table>
-          <p className="align-items-center">Oops, No Record Found</p>
-        </div>
-      );
-    } else {
+    const { restaurantsInTable, sortColumn, onSort } = this.props;
+    if (restaurantsInTable !== null && restaurantsInTable.length !== 0) {
       return (
         <table className="table">
-          <thead>
-            <tr key="2">
-              <th key="name" onClick={() => this.preSort("name")}>
-                Name
-              </th>
-              <th key="city" onClick={() => this.preSort("city")}>
-                City
-              </th>
-              <th key="state" onClick={() => this.preSort("state")}>
-                State
-              </th>
-              <th key="number">Phone Number</th>
-              <th key="genres" onClick={() => this.preSort("genres")}>
-                Genres
-              </th>
-            </tr>
-          </thead>
+          <TableHeader
+            columns={this.columns}
+            sortColumn={sortColumn}
+            onSort={onSort}
+          ></TableHeader>
           <tbody>
             {restaurantsInTable.map((restaurants) => (
               <tr key={restaurants.id}>
@@ -71,6 +43,19 @@ class RestaurantsTable extends Component {
             ))}
           </tbody>
         </table>
+      );
+    } else {
+      return (
+        <div>
+          <table className="table">
+            <TableHeader
+              columns={this.columns}
+              sortColumn={sortColumn}
+              onSort={onSort}
+            ></TableHeader>
+          </table>
+          <p className="align-items-center">Oops, No Record Found</p>
+        </div>
       );
     }
   }
