@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/pagination";
 import { getStates } from "./services/getStates";
 import { getGenres } from "./services/getGenres";
 import Selector from "./common/Selector";
 import { getGenrefiltered } from "../utils/getGenrefiltered";
+import RestaurantsTable from "./RestaurantsTable";
 
 class Restaurants extends Component {
   constructor(props) {
@@ -18,6 +20,7 @@ class Restaurants extends Component {
       genres: [],
       selectedGenre: "",
       selectedState: "",
+      sortColumn: { path: "name", order: "asc" },
     };
   }
 
@@ -44,11 +47,22 @@ class Restaurants extends Component {
     console.log(stateShort);
     this.setState({ selectedState: stateShort });
   };
+
+  handleOnSort = (column) => {
+    this.setState({ sortColumn: column });
+  };
+
   // {id, name, address1, city, state, zip, lat, long, telephone, tags, website, genre, hours, attire}
   // name, city, state, phone number, and genres
   render() {
     const { restaurantsList } = this.state;
-    const { pageSize, currPage, selectedGenre, selectedState } = this.state;
+    const {
+      pageSize,
+      currPage,
+      sortColumn,
+      selectedGenre,
+      selectedState,
+    } = this.state;
     const count = restaurantsList.length;
     const states = getStates(restaurantsList);
     const genres = getGenres(restaurantsList);
@@ -68,7 +82,8 @@ class Restaurants extends Component {
       return genrefiltered.indexOf(r) !== -1;
     });
 
-    const restaurantsArray = paginate(filtered, currPage, pageSize);
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    const restaurantsArray = paginate(sorted, currPage, pageSize);
 
     return (
       <React.Fragment>
@@ -111,28 +126,11 @@ class Restaurants extends Component {
             </div>
           </div>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>City</th>
-              <th>State</th>
-              <th>Phone Number</th>
-              <th>Genres</th>
-            </tr>
-          </thead>
-          <tbody>
-            {restaurantsArray.map((restaurants) => (
-              <tr>
-                <td>{restaurants.name}</td>
-                <td>{restaurants.city}</td>
-                <td>{restaurants.state}</td>
-                <td>{restaurants.telephone}</td>
-                <td>{restaurants.genre}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <RestaurantsTable
+          restaurantsInTable={restaurantsArray}
+          onSort={this.handleOnSort}
+          sortColumn={sortColumn}
+        />
         <Pagination
           itemsCount={filtered.length}
           pageSize={pageSize}
